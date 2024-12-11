@@ -3,23 +3,20 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_openai import ChatOpenAI
 
-#bu kısımda bizim uygulamamızda web search olmayacak
 class RouteQuery(BaseModel):
     """Route a user query to the most relevant datasource."""
 
-    datasource: Literal["vectorstore", "websearch"] = Field(
+    datasource: Literal["vectorstore", "customerservice"] = Field(
         ...,
-        description="Given a user question choose to route it to web search or a vectorstore.",
+        description="Given a user question choose to route it to customer service or a vectorstore.",
     )
-
 
 llm = ChatOpenAI(temperature=0)
 
 structured_llm_router = llm.with_structured_output(RouteQuery)
-# Burada ki input kısmında kullanması gereken belgeleri belirttik
-system = """You are an expert at routing a user question to a vectorstore or web search.
-The vectorstore contains documents related to agents, prompt engineering, and adversarial attacks.
-Use the vectorstore for questions on these topics. For all else, use web-search."""
+system = """You are a digital assistant of a bank and your vector database contains various information about the bank.
+If the user's question is related to banking issues such as bank products, services, loan applications, account transactions, etc., you retrieve documents related to such information from the database and forward them to the user.
+If the user's question is not related to banking, e.g. a request for general information or help on another subject, then direct the user to the ‘Customer Representative’ (customer service) for more detailed support."""
 
 route_prompt = ChatPromptTemplate.from_messages(
     [

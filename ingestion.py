@@ -1,22 +1,23 @@
 from dotenv import load_dotenv
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import WebBaseLoader, Docx2txtLoader
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
 
 load_dotenv()
 
-urls = [
-    "https://lilianweng.github.io/posts/2023-06-23-agent/",
-    "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-    "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
+
+doc = [
+    r"C:\Users\fuaty\OneDrive\Masaüstü\Vakıfbank Tüm BilgilerTR.docx"
 ]
 
-docs = [WebBaseLoader(url).load() for url in urls]
+# Then you would load the DOCX files using Docx2txtLoader
+docs = [Docx2txtLoader(file).load() for file in doc]
 docs_list = [item for sublist in docs for item in sublist]
 
 text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-    chunk_size=250, chunk_overlap=0
+    chunk_size=1000,
+    chunk_overlap=100
 )
 
 docs_splits = text_splitter.split_documents(docs_list)

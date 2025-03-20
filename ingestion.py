@@ -8,7 +8,7 @@ load_dotenv()
 
 
 doc = [
-    r"C:\Users\fuaty\OneDrive\Masaüstü\Vakıfbank Tüm BilgilerTR.docx"
+    r"C:\Users\ismsa\OneDrive\Masaüstü\Vakıfbank Tüm BilgilerTR.docx"
 ]
 
 # Then you would load the DOCX files using Docx2txtLoader

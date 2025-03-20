@@ -1,4 +1,4 @@
 RETRIEVE = "retrieve"
 GRADE_DOCUMENTS = "grade_documents"
 GENERATE = "generate"
-CUSTOMERSERVICE = "customerservice"
+WEBSEARCH = "websearch"
